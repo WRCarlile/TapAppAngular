@@ -16,6 +16,9 @@ import { Component, EventEmitter } from 'angular2/core';
       <li>Pints Available: {{ keg.pints }}</li>
       <br>
       <button (click)="pintsServed(selectedKeg)" class="btn">Serve A Pint</button>
+      <br>
+      <br>
+      <button (click)="changeKeg(selectedKeg)" class="btn">Change Keg</button>
       </ul>
     </div>
   </div>
@@ -43,7 +46,12 @@ export class KegListComponent {
     }
     if (keg.pints === 10){
     this.selectedKeg = keg;
-    alert("Change the keg");
+    alert("Keg is Low");
+    }
   }
+
+  changeKeg(keg: Keg){
+    this.selectedKeg = keg;
+    keg.pints = 124;
   }
 }
