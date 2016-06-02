@@ -23,6 +23,5 @@ import{ KegListComponent} from './keg-list.component';
     }
 
     kegWasSelected(keg: Keg): void {
-      console.log(keg);
     }
 }

@@ -20,7 +20,7 @@ import { KegPipe } from './keg.pipe';
 
     <div *ngFor="#keg of kegs | low:filterKeg:selectedKeg">
       <h3 (click)="kegClicked(keg)" [class.selected]="selectedKeg === keg">{{ keg.name }}</h3>
-      <ul *ngIf="selectedKeg === keg">
+      <ul *ngIf="selectedKeg === keg && show === true" >
       <li>Brand: {{ keg.brand }}</li>
       <li>Price: {{ keg.price }} dollars</li>
       <li>Alcohol Content: {{ keg.alcohol }}%</li>
@@ -45,6 +45,7 @@ export class KegListComponent {
   public selectedKeg: Keg;
   public onKegSelect: EventEmitter<Keg>;
   public filterKeg: string = "notLow";
+  public show: boolean = false;
 
   constructor() {
     this.onKegSelect = new EventEmitter();
@@ -53,6 +54,12 @@ export class KegListComponent {
   kegClicked(keg: Keg): void {
     this.selectedKeg = keg;
     this.onKegSelect.emit(keg);
+    if (this.show ===false) {
+      this.show = true;
+    } else {
+      this.show = false;
+    }
+    console.log(this.show);
   }
 
   createKeg(newKeg: Keg): void {
@@ -76,5 +83,6 @@ export class KegListComponent {
   changeKeg(keg: Keg){
     this.selectedKeg = keg;
     keg.pints = 124;
+    keg.low = false;
   }
 }
