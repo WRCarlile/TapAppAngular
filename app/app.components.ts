@@ -7,7 +7,7 @@ import{ KegListComponent} from './keg-list.component';
   directives: [KegListComponent],
   template: `
     <div class="container">
-      <h1>Kegs</h1>
+      <h1 class="center">Kegs</h1>
       <keg-list [kegs] = "kegs" (onKegSelect)="kegWasSelected($event)"></keg-list>
     </div>
   `
@@ -17,8 +17,8 @@ import{ KegListComponent} from './keg-list.component';
 
     constructor(){
       this.kegs = [
-        new Keg("Blue Hard", "Bill's", "60", ".5", 124),
-        new Keg("Blue Soft", "Bill's", "60", "20", 124)
+        new Keg("Blue Hard", "Bill's", "60", ".5", 124, 0),
+        new Keg("Blue Soft", "Bill's", "60", "20", 124, 1)
       ];
     }
 

@@ -1,10 +1,13 @@
 import { Keg } from './keg.model';
 import { Component, EventEmitter } from 'angular2/core';
+import { NewKegComponent } from './new-keg.component';
+import { KegComponent } from './keg.component';
 
 @Component({
   selector: 'keg-list',
   inputs: ['kegs'],
   outputs: ['onKegSelect'],
+  directives: [NewKegComponent, KegComponent],
   template:`
   <div class="container">
     <div *ngFor="#keg of kegs" >
@@ -21,12 +24,16 @@ import { Component, EventEmitter } from 'angular2/core';
       <button (click)="changeKeg(selectedKeg)" class="btn">Change Keg</button>
       </ul>
     </div>
+    <div>
+      <new-keg (onSubmitNewKeg)="createKeg($event)">
+      </new-keg>
+    </div>
   </div>
   `
 })
 
 export class KegListComponent {
-  public kegList: Keg[];
+  public kegs: Keg[];
   public selectedKeg: Keg;
   public onKegSelect: EventEmitter<Keg>;
 
@@ -37,6 +44,10 @@ export class KegListComponent {
   kegClicked(keg: Keg): void {
     this.selectedKeg = keg;
     this.onKegSelect.emit(keg);
+  }
+
+  createKeg(newKeg: Keg): void {
+    this.kegs.push(newKeg);
   }
 
   pintsServed(keg: Keg){
