@@ -1,7 +1,13 @@
-.selected{
-  color: blue;
-}
-
 .center{
   text-align: center;
+}
+
+body{
+  color: white;
+  margin: auto;
+  background-image: url('http://images.designtrends.com/wp-content/uploads/2016/04/12113406/Wood-Pattern-Background.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }

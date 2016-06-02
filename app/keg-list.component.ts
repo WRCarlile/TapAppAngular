@@ -11,13 +11,16 @@ import { KegPipe } from './keg.pipe';
   directives: [NewKegComponent, KegComponent],
   pipes: [KegPipe],
   template:`
-  <div class="container">
-    <select (change)="onChange($event.target.value)">
-      <option value="all">Show All</option>
-      <option value="low">Show Low Kegs</option>
-      <option value="notLow" selected="selected">Show Kegs in Use</option>
-    </select>
-
+  <div class="container center">
+  <h2>Kegs:</h2>
+  <br>
+  <select (change)="onChange($event.target.value)">
+    <option value="all">Show All</option>
+    <option value="low">Show Low Kegs</option>
+    <option value="notLow" selected="selected">Show Kegs in Use</option>
+  </select>
+  <br>
+  <br>
     <div *ngFor="#keg of kegs | low:filterKeg:selectedKeg">
       <h3 (click)="kegClicked(keg)" [class.selected]="selectedKeg === keg">{{ keg.name }}</h3>
       <ul *ngIf="selectedKeg === keg && show === true" >
@@ -45,7 +48,7 @@ export class KegListComponent {
   public selectedKeg: Keg;
   public onKegSelect: EventEmitter<Keg>;
   public filterKeg: string = "notLow";
-  public show: boolean = false;
+  public show: boolean;
 
   constructor() {
     this.onKegSelect = new EventEmitter();
@@ -54,7 +57,7 @@ export class KegListComponent {
   kegClicked(keg: Keg): void {
     this.selectedKeg = keg;
     this.onKegSelect.emit(keg);
-    if (this.show ===false) {
+    if (this.show === false) {
       this.show = true;
     } else {
       this.show = false;
