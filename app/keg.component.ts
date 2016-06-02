@@ -18,4 +18,7 @@ import { Keg } from './keg.model';
 })
 export class KegComponent {
   public keg: Keg;
+  // toggleLow(setState: boolean){
+  //   this.keg.low = setState;
+  // }
 }

@@ -2,15 +2,23 @@ import { Keg } from './keg.model';
 import { Component, EventEmitter } from 'angular2/core';
 import { NewKegComponent } from './new-keg.component';
 import { KegComponent } from './keg.component';
+import { KegPipe } from './keg.pipe';
 
 @Component({
   selector: 'keg-list',
   inputs: ['kegs'],
   outputs: ['onKegSelect'],
   directives: [NewKegComponent, KegComponent],
+  pipes: [KegPipe],
   template:`
   <div class="container">
-    <div *ngFor="#keg of kegs" >
+    <select (change)="onChange($event.target.value)">
+      <option value="all">Show All</option>
+      <option value="low">Show Low Kegs</option>
+      <option value="notLow" selected="selected">Show Kegs in Use</option>
+    </select>
+
+    <div *ngFor="#keg of kegs | low:filterKeg:selectedKeg">
       <h3 (click)="kegClicked(keg)" [class.selected]="selectedKeg === keg">{{ keg.name }}</h3>
       <ul *ngIf="selectedKeg === keg">
       <li>Brand: {{ keg.brand }}</li>
@@ -36,6 +44,7 @@ export class KegListComponent {
   public kegs: Keg[];
   public selectedKeg: Keg;
   public onKegSelect: EventEmitter<Keg>;
+  public filterKeg: string = "notLow";
 
   constructor() {
     this.onKegSelect = new EventEmitter();
@@ -55,12 +64,15 @@ export class KegListComponent {
     this.selectedKeg = keg;
     keg.pints -= 1;
     }
-    if (keg.pints === 10){
+    if (keg.pints === 122){
     this.selectedKeg = keg;
     alert("Keg is Low");
+    keg.low = true;
     }
   }
-
+  onChange(filterOption){
+    this.filterKeg = filterOption;
+  }
   changeKeg(keg: Keg){
     this.selectedKeg = keg;
     keg.pints = 124;
